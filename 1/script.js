@@ -14,9 +14,9 @@
 
         audioStream.connect(analyser)
         analyser.fftSize = 1024
-        analyser.smoothingTimeConstant = 0.80
-        // analyser.maxDecibels = 0
-        // analyser.minDecibels = -76
+        analyser.smoothingTimeConstant = 0.9
+        analyser.maxDecibels = 0
+        analyser.minDecibels = -76
 
         const frequencyArray = new Uint8Array(analyser.frequencyBinCount)
         visualizer.setAttribute('viewBox', '0 0 255 255')

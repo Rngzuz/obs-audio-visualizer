@@ -22,5 +22,5 @@ svg {
 path {
     stroke-linecap: square;
     stroke: white;
-    stroke-width: 0.15px;
+    stroke-width: 0.5px;
 }
