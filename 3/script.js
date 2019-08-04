@@ -21,16 +21,8 @@ function success(e) {
         if (!isRecording) return;
         const left = e.inputBuffer.getChannelData(0);
         const right = e.inputBuffer.getChannelData(1);
-        //console.log("recording");
         leftChannel = new Float32Array(left);
         rightChannel = new Float32Array(right);
-        /*console.log ('recording');
-        const left = e.inputBuffer.getChannelData (0);
-        const right = e.inputBuffer.getChannelData (1);
-        // we clone the samples
-        leftchannel.push(new Float32Array (left));
-        rightchannel.push(new Float32Array (right));
-        recordingLength += bufferSize;*/
     }
     volume.connect(recorder);
     recorder.connect(context.destination);
