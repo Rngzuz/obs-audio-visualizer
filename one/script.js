@@ -2,14 +2,11 @@
     const paths = document.getElementsByTagName('path')
     const visualizer = document.getElementById('visualizer')
     const mask = visualizer.getElementById('mask')
-    const heading = document.getElementsByTagName('h1')[0]
 
     let path
 
     const soundAllowed = stream => {
         window.persistAudioStream = stream
-        heading.innerHTML = "Thanks"
-        heading.setAttribute('style', 'opacity: 0')
 
         const audioContent = new AudioContext()
         const audioStream = audioContent.createMediaStreamSource(stream)
@@ -37,19 +34,14 @@
                 adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5)
                 paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + adjustedLength)
             }
-
         }
 
         draw()
     }
 
-    const soundNotAllowed = _error => {
-        heading.innerHTML = 'You must allow your microphone.'
-    }
-
     navigator.getUserMedia(
         { audio: true },
         soundAllowed,
-        soundNotAllowed
+        error => console.error(error)
     )
 })()
