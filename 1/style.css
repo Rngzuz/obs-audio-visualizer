@@ -22,5 +22,16 @@ svg {
 path {
     stroke-linecap: square;
     stroke: white;
-    stroke-width: .5px;
+    stroke-width: 0.5px;
+    animation-name: anim;
+    animation-duration: 0.05s;
+}
+
+@keyframes anim {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

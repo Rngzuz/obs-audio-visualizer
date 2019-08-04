@@ -14,12 +14,16 @@
 
         audioStream.connect(analyser)
         analyser.fftSize = 1024
+        analyser.smoothingTimeConstant = 0.90
+        analyser.maxDecibels = 0
+        analyser.minDecibels = -76
 
         const frequencyArray = new Uint8Array(analyser.frequencyBinCount)
         visualizer.setAttribute('viewBox', '0 0 255 255')
 
         for (let i = 0; i < 255; i++) {
             path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+            // path.setAttribute('stroke-dasharray', '0')
             path.setAttribute('stroke-dasharray', '4,1')
             mask.appendChild(path)
         }
