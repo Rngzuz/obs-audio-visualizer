@@ -18,7 +18,7 @@ function draw() {
 
     clear()
     noStroke()
-    fill('rgba(255,255,255,0.65)')
+    fill(0)
 
     beginShape()
     curveVertex(0, height)
