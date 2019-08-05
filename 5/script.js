@@ -8,19 +8,20 @@ function setup() {
     microphone = new p5.AudioIn()
     microphone.start()
 
-    fft = new p5.FFT(0.8, 128)
+    fft = new p5.FFT(0.84, 64)
     fft.setInput(microphone)
 }
 
 function draw() {
     const frequencyBands = fft.analyze().filter(band => band !== 0)
-    const spectrum = [0, ...frequencyBands, 0]
+    const spectrum = [...frequencyBands, 0]
 
     clear()
     noStroke()
     fill(0)
 
     beginShape()
+    vertex(0, height)
     curveVertex(0, height)
 
     for (index = 0; index < spectrum.length; index++) {
@@ -33,6 +34,5 @@ function draw() {
     }
 
     curveVertex(width, height)
-    vertex(0, height)
     endShape()
 }

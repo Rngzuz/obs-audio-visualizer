@@ -8,7 +8,7 @@ function setup() {
     microphone = new p5.AudioIn()
     microphone.start()
 
-    fft = new p5.FFT(0.9, 64)
+    fft = new p5.FFT(0.84, 64)
     fft.setInput(microphone)
 }
 
