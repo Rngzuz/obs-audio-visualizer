@@ -1,38 +1,48 @@
 let microphone, fft
+const bins = 64
 
 function setup() {
+    frameRate(144)
     createCanvas(window.innerWidth, window.innerHeight)
     noFill()
-    colorMode(RGB)
 
     microphone = new p5.AudioIn()
     microphone.start()
 
-    fft = new p5.FFT(0.84, 64)
+    fft = new p5.FFT(0.9, bins)
     fft.setInput(microphone)
 }
 
 function draw() {
-    const spectrum = fft.analyze()
-
     clear()
+
+    const spectrum = [0, ...fft.analyze().filter(band => band !== 0), 0]
+    const yCenter = height / 2
+
     noStroke()
     fill(0)
 
     beginShape()
-    vertex(0, height)
-    curveVertex(0, height)
 
     for (index = 0; index < spectrum.length; index++) {
         const amplitude = spectrum[index]
 
         const x = width / spectrum.length * index
-        const y = map(amplitude, 0, 255, height, 0)
+        const y = map(amplitude, 0, 255, yCenter, 0)
 
         curveVertex(x, y)
     }
 
-    curveVertex(width, height)
-    vertex(0, height)
+    curveVertex(width, yCenter)
+
+    for (index = spectrum.length; index > -1; index--) {
+        const amplitude = spectrum[index]
+
+        const x = width / spectrum.length * index
+        const y = map(amplitude, 0, 255, yCenter, height)
+
+        curveVertex(x, y)
+    }
+
     endShape()
 }

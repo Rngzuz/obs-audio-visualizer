@@ -1,51 +1,39 @@
-(() => {
-    const paths = document.getElementsByTagName('path')
-    const visualizer = document.getElementById('visualizer')
-    const mask = visualizer.getElementById('mask')
+let microphone, fft
 
-    let path
+function setup() {
+    frameRate(144)
+    createCanvas(window.innerWidth, window.innerHeight)
+    noFill()
+    colorMode(RGB)
 
-    const soundAllowed = stream => {
-        window.persistAudioStream = stream
+    microphone = new p5.AudioIn()
+    microphone.start()
 
-        const audioContent = new AudioContext()
-        const audioStream = audioContent.createMediaStreamSource(stream)
-        const analyser = audioContent.createAnalyser()
+    fft = new p5.FFT(0.9, 64)
+    fft.setInput(microphone)
+}
 
-        audioStream.connect(analyser)
-        analyser.fftSize = 1024
-        analyser.smoothingTimeConstant = 0.9
-        analyser.maxDecibels = 0
-        analyser.minDecibels = -76
+function draw() {
+    const spectrum = fft.analyze()
 
-        const frequencyArray = new Uint8Array(analyser.frequencyBinCount)
-        visualizer.setAttribute('viewBox', '0 0 255 255')
+    clear()
+    noStroke()
+    fill(0)
 
-        for (let i = 0; i < 255; i++) {
-            path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-            path.setAttribute('stroke-dasharray', '0')
-            // path.setAttribute('stroke-dasharray', '4,1')
-            mask.appendChild(path)
-        }
+    beginShape()
+    vertex(0, height)
+    curveVertex(0, height)
 
-        const draw = () => {
-            requestAnimationFrame(draw)
-            analyser.getByteFrequencyData(frequencyArray)
+    for (index = 0; index < spectrum.length; index++) {
+        const amplitude = spectrum[index]
 
-            let adjustedLength
+        const x = width / spectrum.length * index
+        const y = map(amplitude, 0, 255, height, 0)
 
-            for (let i = 0; i < 255; i++) {
-                adjustedLength = Math.floor(frequencyArray[i]) - (Math.floor(frequencyArray[i]) % 5)
-                paths[i].setAttribute('d', 'M ' + (i) + ',255 l 0,-' + adjustedLength)
-            }
-        }
-
-        draw()
+        curveVertex(x, y)
     }
 
-    navigator.getUserMedia(
-        { audio: true },
-        soundAllowed,
-        error => console.error(error)
-    )
-})()
+    curveVertex(width, height)
+    vertex(0, height)
+    endShape()
+}

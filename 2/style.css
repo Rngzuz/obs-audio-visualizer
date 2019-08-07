@@ -4,18 +4,18 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+    /* background-color: rgb(24, 160, 238); */
     background-color: rgba(0, 0, 0, 0);
     overflow: hidden;
     font-size: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-svg{
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
     display: block;
-    width: 400px;
-    height: 400px;
-    padding: 0;
-    margin: 0;
 }

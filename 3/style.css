@@ -4,6 +4,7 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+    /* background-color: rgb(24, 160, 238); */
     background-color: rgba(0, 0, 0, 0);
     overflow: hidden;
     font-size: 0;
